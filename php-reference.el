@@ -40,9 +40,12 @@
   (message "Fetching PHP documentation for `%s'..." symbol)
   (shell-command (format "%s %s" php-reference-cmd symbol)
                  php-reference-buffer)
-  (switch-to-buffer-other-window php-reference-buffer t)
-  ;; TODO: switch to markdown-mode
-  )
+  (save-excursion
+    (switch-to-buffer-other-window php-reference-buffer t)
+    ;; Use markdown-mode where available
+    (require 'markdown-mode nil t)
+    (if (functionp 'markdown-mode)
+        (markdown-mode))))
 
 (defun php-short-reference ()
   "Displays function signature for the PHP function at point."
