@@ -1,17 +1,11 @@
-;;; php-reference.el -- hooks for php-reference and php-short-reference scripts
+;;; php-reference.el -- Emacs support for php-reference.py
 
 ;; TODO:
 ;; - test for Markdown mode in `php-reference'
-;; - write `php-short-reference' output to message buffer
-;; - automatically run `php-short-reference' when over recognised symbol
 
 (defvar php-reference-cmd "php-reference"
   "Command used by `php-reference' to generate Markdown-formatted PHP reference
    documentation. Called with one argument (the designated PHP builtin).")
-
-(defvar php-reference-short-cmd "php-short-reference"
-  "Command used by `php-short-reference' to generate a one-line function
-   signature. Called with one argument (the designated PHP function).")
 
 (defvar php-reference-buffer "*PHP Reference*"
   "Output buffer for `php-reference' command.")
@@ -46,8 +40,3 @@
     (require 'markdown-mode nil t)
     (if (functionp 'markdown-mode)
         (markdown-mode))))
-
-(defun php-short-reference ()
-  "Displays function signature for the PHP function at point."
-  ;; FIXME: write to message buffer
-  (shell-command (format "%s %s" php-reference-short-cmd (symbol-at-point))))

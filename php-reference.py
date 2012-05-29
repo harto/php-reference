@@ -3,7 +3,7 @@
 # Prints a Markdown-formatted version of the online PHP reference
 # documentation.
 #
-# Usage: php-reference <function>
+# Usage: php-reference.py <function>
 
 import bs4
 import html2text
