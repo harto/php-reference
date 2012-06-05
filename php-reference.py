@@ -5,10 +5,11 @@
 #
 # Usage: php-reference.py <function>
 
+import argparse
 import bs4
 import html2text
 import re
-import sys
+import unicodedata
 import urllib2
 
 def reference_html(php_symbol):
@@ -75,5 +76,20 @@ def formatted_reference(html):
     text = re.sub(r'\n\n+', '\n\n', text, flags=re.MULTILINE)
     return text
 
+def asciify(s):
+    """
+    Returns the approximate ASCII equivalent of a Unicode string.
+    """
+    # http://en.wikipedia.org/wiki/Unicode_equivalence#Normal_forms
+    return unicodedata.normalize('NFKD', s).encode('ascii', 'ignore')
+
 if __name__ == '__main__':
-    print formatted_reference(normalised_html(reference_html(sys.argv[1])))
+    parser = argparse.ArgumentParser(description='Displays nicely-formatted PHP documentation')
+    parser.add_argument('symbol', help='PHP symbol')
+    parser.add_argument('--ascii', help='attempt to convert output to ASCII',
+                        action='store_true')
+
+    args = parser.parse_args()
+    
+    text = formatted_reference(normalised_html(reference_html(args.symbol)))
+    print (asciify(text) if args.ascii else text)

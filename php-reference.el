@@ -7,6 +7,9 @@
   "Command used by `php-reference' to generate Markdown-formatted PHP reference
    documentation. Called with one argument (the designated PHP builtin).")
 
+(defvar php-reference-cmd-opts '()
+  "List of options to pass to `php-reference-cmd'.")
+
 (defvar php-reference-buffer "*PHP Reference*"
   "Output buffer for `php-reference' command.")
 
@@ -32,7 +35,10 @@
   (interactive
    (list (php-reference-read-symbol)))
   (message "Fetching PHP documentation for `%s'..." symbol)
-  (shell-command (format "%s %s" php-reference-cmd symbol)
+  (shell-command (format "%s %s %s"
+                         php-reference-cmd
+                         (mapconcat #'identity php-reference-cmd-opts " ")
+                         symbol)
                  php-reference-buffer)
   (save-excursion
     (switch-to-buffer-other-window php-reference-buffer t)
