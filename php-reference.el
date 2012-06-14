@@ -1,8 +1,5 @@
 ;;; php-reference.el -- Emacs support for php-reference.py
 
-;; TODO:
-;; - test for Markdown mode in `php-reference'
-
 (defvar php-reference-cmd "php-reference"
   "Command used by `php-reference' to generate Markdown-formatted PHP reference
    documentation. Called with one argument (the designated PHP builtin).")
