@@ -12,8 +12,6 @@
 
 (defun php-reference-read-symbol ()
   "Prompts for a PHP symbol, defaulting to symbol at point."
-  ;; TODO
-  (thing-at-point 'word)
   (let* ((default-symbol (if (region-active-p)
                              (buffer-substring-no-properties (region-beginning)
                                                              (region-end))
