@@ -35,9 +35,9 @@
                          (mapconcat #'identity php-reference-cmd-opts " ")
                          symbol)
                  php-reference-buffer)
-  (save-excursion
-    (switch-to-buffer-other-window php-reference-buffer t)
-    ;; Use markdown-mode where available
-    (require 'markdown-mode nil t)
-    (if (functionp 'markdown-mode)
-        (markdown-mode))))
+  ;; Use markdown-mode where available
+  (if (require 'markdown-mode nil t)
+      (save-excursion
+        (set-buffer php-reference-buffer)
+        (markdown-mode)))
+  (view-buffer-other-window php-reference-buffer nil #'kill-buffer))
