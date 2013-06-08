@@ -16,12 +16,12 @@ setup(
     license='MIT',
     keywords='php reference documentation cli',
     url='https://github.com/harto/php-reference',
-    classifiers=('Development Status :: 3 - Alpha',),
+    classifiers=['Development Status :: 3 - Alpha'],
 
-    packages=('php_reference',),
+    packages=['php_reference'],
 
-    install_requires=('beautifulsoup4==4.1.1',
-                      'html2text==3.200.3'),
+    install_requires=['beautifulsoup4==4.1.1',
+                      'html2text==3.200.3'],
 
     entry_points={
         'console_scripts': [
