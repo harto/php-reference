@@ -12,7 +12,7 @@ setup(
     author='Stuart Campbell',
     author_email='stuart@harto.org',
     description='A CLI command for fetching PHP documentation',
-    long_description=slurp('README.md'),
+    long_description=slurp('README.rst'),
     license='MIT',
     keywords='php reference documentation cli',
     url='https://github.com/harto/php-reference',
