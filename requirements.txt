@@ -1,3 +1,0 @@
-# pip requirements
-beautifulsoup4==4.1.1
-html2text==3.200.3

@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-# Get the parent directory of this script, resolving all symlinks. The Python
-# one-liner is required because we can't depend on the existence of `realpath'.
-HERE=$(dirname $(python -c 'import os, sys; print os.path.realpath(sys.argv[1])' $0))
-
-$HERE/env/bin/python $HERE/php-reference.py $@

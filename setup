@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-HERE=$(dirname $0)
-if [[ ! -d $HERE/env ]]; then
-    virtualenv $HERE/env
-    $HERE/env/bin/pip install -r $HERE/requirements.txt
-fi
