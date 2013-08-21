@@ -8,7 +8,7 @@ def slurp(fname):
 
 setup(
     name='php-reference',
-    version='0.0.1',
+    version='0.0.2',
     author='Stuart Campbell',
     author_email='stuart@harto.org',
     description='A CLI command for fetching PHP documentation',
