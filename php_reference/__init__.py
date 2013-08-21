@@ -2,7 +2,9 @@
 
 import argparse
 import bs4
+import codecs
 import html2text
+import os.path
 import re
 import unicodedata
 import urllib2
@@ -83,15 +85,48 @@ def asciify(s):
     return unicodedata.normalize('NFKD', s).encode('ascii', 'ignore')
 
 
+class FileSystemCache(object):
+
+    def __init__(self, path):
+        path = os.path.expanduser(path)
+        if not os.path.isdir(path):
+            raise Exception('Cache directory %s not found' % path)
+        self.path = path
+
+    def get(self, php_symbol):
+        try:
+            with codecs.open(self._resolve_path(php_symbol), 'r', 'utf-8') as f:
+                return f.read()
+        except IOError:
+            return None
+
+    def put(self, php_symbol, contents):
+        with codecs.open(self._resolve_path(php_symbol), 'w', 'utf-8') as f:
+            f.write(contents)
+
+    def _resolve_path(self, php_symbol):
+        return os.path.join(self.path, php_symbol)
+
+
+class BlackHoleCache(object):
+    def get(self, php_symbol): pass
+    def put(self, php_symbol, contents): pass
+
+
 def main():
     parser = argparse.ArgumentParser(description='Displays nicely-formatted PHP documentation')
     parser.add_argument('symbol', help='PHP symbol')
-    parser.add_argument('--ascii', help='attempt to convert output to ASCII',
-                        action='store_true')
+    parser.add_argument('--ascii', help='attempt to convert output to ASCII', action='store_true')
+    parser.add_argument('--cache', help='local HTML cache directory', metavar='<dir>')
 
     args = parser.parse_args()
 
-    text = formatted_reference(normalised_html(reference_html(args.symbol)))
+    cache = FileSystemCache(args.cache) if args.cache else BlackHoleCache()
+    text = cache.get(args.symbol)
+    if not text:
+        text = formatted_reference(normalised_html(reference_html(args.symbol)))
+        cache.put(args.symbol, text)
+
     print (asciify(text) if args.ascii else text)
 
 
